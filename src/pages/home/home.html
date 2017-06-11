@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+
+    <button block ion-button (click)="login()" *ngIf="!(user | async)?.uid">Anonymous Login</button>
+    <button block ion-button (click)="logout()" *ngIf="(user | async)?.uid">Logout</button>
+    <button block ion-button (click)="loginFacebook()" *ngIf="!(user | async)?.uid">Facebook Login</button>
+
+    <ion-list>
+      <ion-item>
+        <ion-input type="text" id="message" *ngIf="(user | async)?.uid"
+                    placeholder="What is it that you do?"
+                    (keyup.enter)="Send($event.target.value)"
+                    [(ngModel)]="msgVal">
+        </ion-input>
+      </ion-item>
+
+      <ion-item *ngFor="let item of items | async">
+        <ion-avatar item-start>
+          <img src="{{item.photo}}">
+        </ion-avatar>
+        <p>{{item.name}}</p>
+        {{item.message}}
+      </ion-item>
+    </ion-list>
+
+</ion-content>
