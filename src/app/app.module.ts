@@ -24,6 +24,8 @@ export const firebaseConfig = {
   messagingSenderId: "515070619352"
 }
 
+
+
 @NgModule({
   declarations: [
     MyApp,

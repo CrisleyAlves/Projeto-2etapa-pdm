@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Chat
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -9,9 +9,16 @@
 <ion-content padding>
 
 
-    <button block ion-button (click)="login()" *ngIf="!(user | async)?.uid">Anonymous Login</button>
+    <button ion-button (click)="login()" *ngIf="!(user | async)?.uid">
+      <ion-icon ios="ios-person" md="md-person"></ion-icon>
+    </button>
     <button block ion-button (click)="logout()" *ngIf="(user | async)?.uid">Logout</button>
-    <button block ion-button (click)="loginFacebook()" *ngIf="!(user | async)?.uid">Facebook Login</button>
+    <button  ion-button (click)="loginFacebook()" *ngIf="!(user | async)?.uid">
+       <ion-icon ios="logo-facebook" md="logo-facebook"></ion-icon>
+    </button>
+    <button  ion-button (click)="loginGoogle()" *ngIf="!(user | async)?.uid">
+      <ion-icon ios="logo-googleplus" md="logo-googleplus"></ion-icon>
+    </button>
 
     <ion-list>
       <ion-item>
@@ -22,12 +29,18 @@
         </ion-input>
       </ion-item>
 
-      <ion-item *ngFor="let item of items | async">
+      <ion-item *ngFor="let item of items | async" >
         <ion-avatar item-start>
           <img src="{{item.photo}}">
         </ion-avatar>
-        <p>{{item.name}}</p>
-        {{item.message}}
+        <h2>{{item.name}}</h2>
+        <p>{{item.message}}</p>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-item *ngFor="let user of users | async">
+          {{user.name}}
       </ion-item>
     </ion-list>
 

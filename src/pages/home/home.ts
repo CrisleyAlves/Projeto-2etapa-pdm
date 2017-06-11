@@ -15,17 +15,26 @@ import { Vibration } from '@ionic-native/vibration';
 export class HomePage {
 
   user: Observable<firebase.User>;
+  loginMethod: string;
   items: FirebaseListObservable<any[]>;
+  users: FirebaseListObservable<any[]>;
   name: any;
   msgVal: string = '';
 
   constructor(public navCtrl: NavController, public afAuth: AngularFireAuth, public af: AngularFireDatabase, public vibration: Vibration) {
+    this.logout();
     this.vibrate();
     this.items = af.list('/messages', {
       query: {
-        limitToLast: 50
+        limitToLast: 5
       }
     });
+
+    this.users = af.list('/users', {
+      query:{
+          limitToLast: 50
+      }
+    })
     this.user = this.afAuth.authState;
   }
 
@@ -38,9 +47,17 @@ export class HomePage {
       .then(res =>
           this.name = res
         );
+
+        this.loginMethod = 'Facebook';
   }
 
-
+  loginGoogle() {
+    this.name = this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then(res =>
+          this.name = res
+        );
+        this.loginMethod = 'Google';
+  }
 
   logout() {
       this.afAuth.auth.signOut();
@@ -48,20 +65,32 @@ export class HomePage {
 
   Send(desc: string) {
       if(this.name){
-        this.items.push({
-          name: this.name.additionalUserInfo.profile.name,
-          photo: this.name.additionalUserInfo.profile.picture.data.url,
-          message: desc
-          });
-        this.msgVal = '';
+
+        if(this.loginMethod == 'Facebook'){
+          this.items.push({
+              name: this.name.additionalUserInfo.profile.name,
+              photo: this.name.additionalUserInfo.profile.picture.data.url,
+              message: desc,
+              user: this.name.user.uid
+            });
+        }else{
+          this.items.push({
+              name: this.name.additionalUserInfo.profile.name,
+              photo: this.name.additionalUserInfo.profile.picture,
+              message: desc,
+              user: this.name.user.uid
+            });
+        }
+
+
       }else{
         this.items.push({
           name: "Anonimo",
           photo: "http://www.ecsu.org.uk/images/anon.png",
           message: desc
           });
-        this.msgVal = '';
       }
+      this.msgVal = '';
   }
 
   vibrate(){
