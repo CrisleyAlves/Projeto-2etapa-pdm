@@ -8,6 +8,8 @@
 
 <ion-content padding>
 
+  <img [src]="image" alt="">
+  <button ion-button clear (click)="takePicture()">Take picture</button>
 
     <button ion-button (click)="login()" *ngIf="!(user | async)?.uid">
       <ion-icon ios="ios-person" md="md-person"></ion-icon>

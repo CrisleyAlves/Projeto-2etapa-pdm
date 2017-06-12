@@ -13,6 +13,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
 import { Vibration } from '@ionic-native/vibration';
+import { Camera } from '@ionic-native/camera';
+
 
 
 export const firebaseConfig = {
@@ -46,7 +48,7 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AngularFireModule, AngularFireAuth, AngularFireDatabase, Vibration
+    AngularFireModule, AngularFireAuth, AngularFireDatabase, Vibration, Camera
   ]
 })
 export class AppModule {}

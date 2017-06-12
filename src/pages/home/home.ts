@@ -7,6 +7,8 @@ import * as firebase from 'firebase/app';
 import {Observable} from 'rxjs/Observable';
 
 import { Vibration } from '@ionic-native/vibration';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 
 @Component({
   selector: 'page-home',
@@ -21,9 +23,19 @@ export class HomePage {
   name: any;
   msgVal: string = '';
 
-  constructor(public navCtrl: NavController, public afAuth: AngularFireAuth, public af: AngularFireDatabase, public vibration: Vibration) {
+  image: string;
+
+  options: CameraOptions = {
+    quality: 1000,
+    destinationType: this.camera.DestinationType.DATA_URL,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE
+
+  }
+
+  constructor(public navCtrl: NavController, public afAuth: AngularFireAuth, public af: AngularFireDatabase, public vibration: Vibration, public camera: Camera) {
+
     this.logout();
-    this.vibrate();
     this.items = af.list('/messages', {
       query: {
         limitToLast: 5
@@ -64,6 +76,11 @@ export class HomePage {
   }
 
   Send(desc: string) {
+
+      this.vibrate();
+
+
+
       if(this.name){
 
         if(this.loginMethod == 'Facebook'){
@@ -82,6 +99,10 @@ export class HomePage {
             });
         }
 
+        this.users.push({
+            userId: this.name.user.uid,
+            name: this.name.additionalUserInfo.profile.name
+        });
 
       }else{
         this.items.push({
@@ -96,6 +117,15 @@ export class HomePage {
   vibrate(){
     console.log('deu certo');
     this.vibration.vibrate(2000);
+  }
+
+  async takePicture(): Promise<any>{
+    try{
+      this.image = await this.camera.getPicture(this.options);
+      console.log(this.image);
+    }catch(e){
+      console.log(e);
+    }
   }
 
 }
