@@ -14,16 +14,15 @@ import { HomePage } from '../pages/home/home';
 
 import { Vibration } from '@ionic-native/vibration';
 import { Camera } from '@ionic-native/camera';
-
-
+import { CameraMock } from '../pages/home/camera-mock';
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBg4OzSLZwjO3uzkm4FDZo1Cwf4U0jLOPU",
-  authDomain: "projeto-2etapa-pdm.firebaseapp.com",
-  databaseURL: "https://projeto-2etapa-pdm.firebaseio.com",
-  projectId: "projeto-2etapa-pdm",
-  storageBucket: "projeto-2etapa-pdm.appspot.com",
-  messagingSenderId: "515070619352"
+  apiKey: "AIzaSyD069e51NIaCh3K_BAHpNgS3BAdQr3Qo9s",
+    authDomain: "projetochat2etapa.firebaseapp.com",
+    databaseURL: "https://projetochat2etapa.firebaseio.com",
+    projectId: "projetochat2etapa",
+    storageBucket: "",
+    messagingSenderId: "163183256987"
 }
 
 
@@ -48,7 +47,8 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AngularFireModule, AngularFireAuth, AngularFireDatabase, Vibration, Camera
+    {provide: Camera, useClass: CameraMock},
+    AngularFireModule, AngularFireAuth, AngularFireDatabase, Vibration
   ]
 })
 export class AppModule {}

@@ -30,7 +30,6 @@ export class HomePage {
     destinationType: this.camera.DestinationType.DATA_URL,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
-
   }
 
   constructor(public navCtrl: NavController, public afAuth: AngularFireAuth, public af: AngularFireDatabase, public vibration: Vibration, public camera: Camera) {
